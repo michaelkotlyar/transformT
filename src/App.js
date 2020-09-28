@@ -47,7 +47,10 @@ export default function App() {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+    <TouchableWithoutFeedback
+      style={styles.wrapper}
+      onPress={dismissKeyboard}
+    >
       <View style={styles.container}>
         <View style={styles.textsContainer}>
           <Text style={styles.label}>Input Text</Text>
@@ -109,7 +112,7 @@ export default function App() {
             <Text>Paste Input Text</Text>
           </TouchableOpacity>
         </View>
-        <StatusBar/>
+        <StatusBar style='dark' />
       </View>
     </TouchableWithoutFeedback>
   );

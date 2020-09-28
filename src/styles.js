@@ -1,9 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
   container: {
+    flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignSelf: 'center',
     width: '100%',
     maxWidth: 760,
@@ -36,6 +40,7 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   textInput: {
+    outline: 'none'
   },
   textOutput: {
   },
@@ -48,7 +53,7 @@ export const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   button: {
     backgroundColor: '#e4e4e4',
@@ -57,6 +62,7 @@ export const styles = StyleSheet.create({
     paddingRight: 15,
     paddingBottom: 15,
     paddingLeft: 15,
+    marginLeft: 15,
   }
 });
 
@@ -67,6 +73,7 @@ export const casing = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 10,
     borderRadius: 12,
+    appearance: 'none',
   },
   inputIOS: {
     fontSize: 16,
