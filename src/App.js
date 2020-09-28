@@ -1,12 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Picker, TouchableOpacity, Clipboard } from 'react-native';
-
-import { lowerCase } from 'lower-case';
-import { upperCase } from 'upper-case';
-import { capitalCase } from 'capital-case';
-import { sentenceCase } from 'sentence-case';
-import { spongeCase } from 'sponge-case';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Clipboard,
+  Keyboard,
+  Platform
+} from 'react-native';
+import PickerSelect from 'react-native-picker-select';
+import { Chevron } from 'react-native-shapes';
+import { switchCasing } from './helpers';
+import { styles, casing as casingStyle } from './styles';
 
 export default function App() {
   const [text, setText] = useState('');
@@ -16,73 +24,93 @@ export default function App() {
   const changeText = (text, casing) => {
     setText(text);
     changeCasing(text, casing);
-  }
+  };
 
   const changeCasing = (text, casing) => {
     setCasing(casing);
     setCasingText(switchCasing(text, casing));
   }
 
-  const switchCasing = (text, casing) => {
-    if (text === '') return '';
-    switch (casing) {
-      case 'lowercase':
-        return lowerCase(text);
-      case 'uppercase':
-        return upperCase(text);
-      case 'capitalized':
-        return capitalCase(text);
-      case 'sentence':
-        return sentenceCase(text);
-      case 'random':
-        return spongeCase(text);
-      default: // original
-        return text;
-    }
-  }
-
   const copyToClipboard = () => {
     Clipboard.setString(casingText);
   }
 
+  const pasteFromClipboard = async () => {
+    const paste = await Clipboard.getString();
+    changeText(paste, casing);
+  }
+
+  const dismissKeyboard = () => {
+    if (Platform.OS !== 'web') {
+      Keyboard.dismiss();
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={{ height: 40 }}
-        placeholder='Type here...'
-        onChangeText={text => changeText(text, casing)}
-        defaultValue={text}
-      />
-      <Text>
-        {casingText}
-      </Text>
-      <Picker
-        selectedValue={casing}
-        style={{ height: 50, width: 150 }}
-        onValueChange={casing => changeCasing(text, casing)}
-      >
-        <Picker.Item label='Original' value='original' />
-        <Picker.Item label='lowercase' value='lowercase' />
-        <Picker.Item label='UPPERCASE' value='uppercase' />
-        <Picker.Item label='Capitalised' value='capitalized' />
-        <Picker.Item label='Sentence' value='sentence' />
-        <Picker.Item label='rANdoM' value='random' />
-      </Picker>
-      <TouchableOpacity
-        onPress={copyToClipboard}
-      >
-        <Text>Copy to Clipboard</Text>
-      </TouchableOpacity>
-      <StatusBar/>
-    </View>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <View style={styles.textsContainer}>
+          <Text style={styles.label}>Input Text</Text>
+          <View style={styles.textContainer}>
+            <TextInput
+              style={[styles.text, styles.textInput]}
+              placeholder='Type here...'
+              onChangeText={text => changeText(text, casing)}
+              defaultValue={text}
+              multiline={true}
+            />
+          </View>
+          <View style={styles.spacer}/>
+          <Text style={styles.label}>transformT Text</Text>
+          <TouchableOpacity
+            onPress={copyToClipboard}
+          >
+            <View style={styles.textContainer}>
+              <Text style={[styles.text, styles.textOutput]}>{casingText}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.casingContainer}>
+          <PickerSelect
+            placeholder={{
+              label: 'Select a casing...',
+              value: null,
+              color: '#e4e4e4',
+            }}
+            value={casing ? casing : 'original'}
+            onValueChange={casing => changeCasing(text, casing)}
+            items={[
+              { label: 'Original', value: 'original', key: 'original' },
+              { label: 'lowercase', value: 'lowercase', key: 'lowercase' },
+              { label: 'UPPERCASE', value: 'uppercase', key: 'uppercase' },
+              { label: 'Capitalised', value: 'capitalized', key: 'capitalized' },
+              { label: 'Sentence', value: 'sentence', key: 'sentence' },
+              { label: 'rANdoMiseD', value: 'random', key: 'random' },
+            ]}
+            useNativeAndroidPickerStyle={false}
+            textInputProps={{ underlineColorAndroid: 'cyan' }}
+            Icon={() => {
+              return <Chevron size={1.5} color="gray" />;
+            }}
+            style={casingStyle}
+          />
+        </View>
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={copyToClipboard}
+          >
+            <Text>Copy transformT Text</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={pasteFromClipboard}
+          >
+            <Text>Paste Input Text</Text>
+          </TouchableOpacity>
+        </View>
+        <StatusBar/>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
