@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {
+  Clipboard,
   Keyboard,
   Platform,
   StyleSheet,
@@ -10,7 +11,7 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native';
-import Clipboard from '@react-native-community/clipboard';
+// import Clipboard from '@react-native-community/clipboard';
 import PickerSelect from 'react-native-picker-select';
 import { Chevron } from 'react-native-shapes';
 import { useDarkMode } from 'react-native-dynamic';
@@ -37,7 +38,8 @@ const App = () => {
   }
 
   const pasteFromClipboard = async () => {
-    const paste = await Clipboard.getString();
+    var paste = await Clipboard.getString();
+    console.log(Clipboard);
     setText(paste);
     setCasingText(switchCasing(paste, casing));
   }
