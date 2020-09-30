@@ -1,14 +1,31 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
+import Constants from 'expo-constants';
+
+const black = '#151515';
+const dark = '#232323';
+const light = '#e4e4e4';
+const white = '#ffffff';
+const green = '#3de068';
+
+export const colors = {
+  background: useDarkMode ? black : white,
+  textbox: useDarkMode ? dark : light,
+  text: useDarkMode ? white : black,
+};
 
 export const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignSelf: 'center',
+    paddingTop: Constants.statusBarHeight,
     width: '100%',
     maxWidth: 760,
   },
@@ -19,6 +36,7 @@ export const styles = StyleSheet.create({
   label: {
     paddingBottom: 5,
     fontWeight: '700',
+    color: colors.text,
   },
   textsContainer: {
     padding: 15,
@@ -26,7 +44,7 @@ export const styles = StyleSheet.create({
   textContainer: {
     width: '100%',
     height: 150,
-    backgroundColor: '#e4e4e4',
+    backgroundColor: colors.textbox,
     borderRadius: 12,
   },
   text: {
@@ -38,9 +56,9 @@ export const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 15,
     paddingLeft: 10,
+    color: colors.text,
   },
   textInput: {
-    outline: 'none'
   },
   textOutput: {
   },
@@ -63,42 +81,35 @@ export const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingLeft: 15,
     marginLeft: 15,
-  }
+  },
+  primaryButton: {
+    backgroundColor: green,
+  },
+  secondaryButton: {
+    backgroundColor: light,
+  },
 });
 
-export const casing = StyleSheet.create({
-  inputWeb: {
-    paddingTop: 10,
-    paddingRight: 30,
-    paddingBottom: 10,
-    paddingLeft: 10,
-    borderRadius: 12,
-    appearance: 'none',
-  },
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#e4e4e4',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30,
-  },
+const pickerStyles = {
+  paddingTop: 10,
+  paddingRight: 30,
+  paddingBottom: 10,
+  paddingLeft: 10,
+  borderRadius: 12,
+  backgroundColor: colors.textbox,
+  borderWidth: 0,
+  color: colors.text,
+  fontSize: 16,
+};
+
+export const casingStyle = StyleSheet.create({
+  inputWeb: pickerStyles,
+  inputIOS: pickerStyles,
+  inputAndroid: pickerStyles,
   iconContainer: {
     height: '100%',
     justifyContent: 'center',
     paddingTop: 2,
     paddingRight: 15,
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: 'purple',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30,
   },
 });
