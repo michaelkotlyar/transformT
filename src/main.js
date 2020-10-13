@@ -1,11 +1,16 @@
 import { registerRootComponent } from 'expo';
 import React from 'react';
-import { View } from 'react-native';
+import { AppearanceProvider } from 'react-native-appearance';
 import App from './App';
 
 class Main extends React.Component {
+  
   render() {
-    return <App/>;
+    return (
+      <AppearanceProvider>
+        <App/>
+      </AppearanceProvider>
+    );
   }
 }
 
