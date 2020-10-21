@@ -81,6 +81,7 @@ export const styles = StyleSheet.create({
     color: colors.white,
   },
   textInput: {
+    textAlignVertical: 'top',
   },
   textOutput: {
   },
