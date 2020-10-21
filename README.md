@@ -7,3 +7,6 @@ Source code for a simple iOS/Android app. All it does is transform your text int
 - Capitalised
 - Sentence
 - rANdoMiseD
+
+## Screenshots
+![Screenshots](https://github.com/uzimike/transformT/raw/master/assets/demo-screens.png)
