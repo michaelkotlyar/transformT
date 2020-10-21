@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/clipboard": "^1.4.0",
+    "@react-native-community/picker": "1.6.6",
     "capital-case": "^1.0.3",
     "change-case": "^4.1.1",
     "expo": "^39.0.0",
