@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import {
   Clipboard,
   Keyboard,
+  KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
@@ -64,7 +65,7 @@ const App = () => {
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <View style={[styles.wrapper, wrapperColors]}>
+      <KeyboardAvoidingView style={[styles.wrapper, wrapperColors]}>
         <View style={styles.container}>
           <Text style={[styles.title, labelColors]}>transformT</Text>
           <View style={styles.textsContainer}>
@@ -121,7 +122,7 @@ const App = () => {
           </View>
           <StatusBar style={isLight ? 'dark' : 'light'} />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
